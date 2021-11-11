@@ -6,6 +6,8 @@ En esta sección tenemos códigos y el paso a paso de configuración para el des
 2. [Consumo de tweets usando Tweepy](#consuming-tweets)
 3. [Ejemplos Tweepy](#examples)
 	1. [Streamer versión 1](#tweet_v1)
+	2. [Kafka version 2](#tweet_v2)
+	3. [Kinesis version 3](#tweet_v3)
 
 
 
@@ -47,6 +49,8 @@ El primer caso es el `tweeter_streamer.py` este archivo se conecta con la versi�
 ```
 y pasarle esta clase al stream encargado de manejar el flujo de datos. Las credenciales las guarde en un archivo de credenciales para facilitar el reuso en otras versiones. Otra opción es como guardarlas como variables de ambiente del equipo o servidor donde se está trabajando.
 
+![Consumo tweets](./Imagenes/tweet_streamer.JPG "ejemplo 1")
+
 ### Leer tweets para enviarlos a un Kafka producer <a name="tweet_v2"></a>
 El segundo caso es el proceso de enviar datos a un kafka server (la configuración e instalación no se cubre en esta sección) en esta ocasión modifiqué la lógica original para utilizar la versión actual de Tweepy se realizan unos a mi StdOutListener y configure una clase que hereda de kafka producer para poder gestionar algunos eventos.
 El código se encuentra en `tweeter_streamer_v2.py`
@@ -74,37 +78,39 @@ self.kafka_producer.send('twitter-topic', key = bytes(str(self.id), encoding='la
 
 De manera paralela cree un consumidor para probar que el código funcionara cuya única función era tomar el dato y almacenarlo en una base de datos de MongoDB `kafka_consumer.py` disponible en el repositorio
 
+![Consumo tweets kafka](./Imagenes/tweet_streamer_v2.JPG "ejemplo 2")
+
 ### Leer tweets exportar a Kinesis <a name="tweet_v3"></a>
 Esta versión funciona de manera similar a las anteriores pero esta pone un tweet en Kinesis utilizando el cliente boto3 y no un endpoint como en versiones anteriores. por lo que es mas fácil de configurar.
 La mayor diferencia se encuentra en la forma en la cual se envia un dato, porque el formato debe ser json y tener cuidado con los caracteres especiales y algunos formatos de fecha.
 
 ```Python
 tweet_dict = {
-				'id'			: self.id,
-				'text' 			: ud.unidecode(status.text),
-				'created_time'	: status.created_at.isoformat(),
-				'source'		: status.source,
-				'tweet_id'		: status.id_str,
-				'user_name'		: status.user.name,
-				'user_id'		: status.user.id_str,
-				'run_start_time': self.start_time,
-				'run_time_limit': self.limit
-			}
+	'id'			: self.id,
+	'text' 			: ud.unidecode(status.text),
+	'created_time'	: status.created_at.isoformat(),
+	'source'		: status.source,
+	'tweet_id'		: status.id_str,
+	'user_name'		: status.user.name,
+	'user_id'		: status.user.id_str,
+	'run_start_time': self.start_time,
+	'run_time_limit': self.limit
+}
 
 ```
 y el envio de datos a Kinesis
 ```Python
 def send_to_kinesis(self, stream_name, kinesis_client, tweet_dict):
-		data = tweet_dict
-		kinesis_client.put_record(
-			StreamName=stream_name,
-			Data=json.dumps(data),
-			PartitionKey="partitionkey")
+	data = tweet_dict
+	kinesis_client.put_record(
+		StreamName=stream_name,
+		Data=json.dumps(data),
+		PartitionKey="partitionkey")
 ```
+![Consumo tweets kinesis](./Imagenes/tweet_streamer_v3.JPG "ejemplo 3")
+
+Nótese que la imagen no menciono como consumir estos datos esto hace parte del proyecto general
 
 ## Conclusión
 
-Estos códigos nos ayudan a tomar una fuente de datos viva e interiorizar el proceso de consumo de esta data desde un ambiente local, para este caso Twitter interiorizando el funcionamiento de esta parte tendremos el paso inicial para la implementación de la arquitectura
-
-
-
+Estos códigos nos ayudan a tomar una fuente de datos viva e interiorizar el proceso de consumo de esta data desde un ambiente local, para este caso `Twitter` interiorizando el funcionamiento de esta parte tendremos el paso inicial para la implementación de la arquitectura
