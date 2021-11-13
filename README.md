@@ -9,8 +9,20 @@ La idea de este proyecto es llevar un proceso de consumo de datos vivos en este 
 
 # 1 - Elección de una arquitectura de referencia
 
-Para la implementación de esta arquitectura pensamos en dos opciones [Lambda](https://databricks.com/glossary/lambda-architecture) y [Kappa](https://hazelcast.com/glossary/kappa-architecture/) para nuestro caso decidimos utilizar la arquitectura **Lambda** porque nos permitía tener una opción de batch processing y otra de speed processing. En cada una de las carpetas de este repositorio se muestran las secciones del proceso
+Para la implementación de esta arquitectura pensamos en dos opciones [Lambda](https://databricks.com/glossary/lambda-architecture) y [Kappa](https://hazelcast.com/glossary/kappa-architecture/) para nuestro caso decidimos utilizar la arquitectura **Lambda** porque nos permitía tener una opción de batch processing y otra de speed processing. En cada una de las carpetas de este repositorio se muestran las secciones del proceso, el objetivo de este proyecto es mostrar la implementación de la siguiente arquitectura de principio a fin.
 
-## consumo de la api de Twitter
-podemos ver el paso a paso de configuración y códigos relacionados en la carpeta Twitter. además de un breve contexto de cada uno. Es el primer paso de este ejercicio en el cual tomamos datos de tweeter utilizando las llaves de una aplicación registrada.
+![developer portal](./Imagenes/complete_architecture.JPG "Developer Portal Twitter")
+
+# 2 - Consumo de la api de Twitter
+podemos ver el paso a paso de configuración y códigos relacionados en la carpeta `Twitter`. además de un breve contexto de cada uno. Es el primer paso de este ejercicio en el cual tomamos datos de tweeter utilizando las llaves de una aplicación registrada, los transformamos y los ponemos en un kinesis stream.
+
+## 3- Creación kinesis stream
+Es el encargado de la recepción y distribución de datos en nuestra arquitectura tenemos dos tipos de servicios implementados `Kinesis Stream` y `Kinesis Firehose` en esta sección se analizan algunas de las configuraciones entre otras pueden ser examinadas en la carpeta `Kinesis`.
+
+## 4 - Creación de Catalogos Glue
+
+## 5 - Creación de tabla DynamoDB
+
+## 6 - Funciones Lambda
+
 

@@ -14,7 +14,7 @@ En esta sección tenemos códigos y el paso a paso de configuración para el des
 ## Configuración inicial <a name="initial-config"></a>
 Lo primero que debemos realizar es entrar a la página para [desarrolladores de Twitter](https://developer.twitter.com/en) y registrarnos, en el portal de desarrolladores podremos crear un nuevo proyecto:
 
-![developer portal](./Imagenes/index_developers.JPG "Developer Portal Twitter")
+![developer portal](../Imagenes/index_developers.JPG "Developer Portal Twitter")
 
 Presionar el botón `Create Project`
 En esta pagína seguimos los pasos para crear una nueva aplicación:
@@ -49,7 +49,7 @@ El primer caso es el `tweeter_streamer.py` este archivo se conecta con la versi�
 ```
 y pasarle esta clase al stream encargado de manejar el flujo de datos. Las credenciales las guarde en un archivo de credenciales para facilitar el reuso en otras versiones. Otra opción es como guardarlas como variables de ambiente del equipo o servidor donde se está trabajando.
 
-![Consumo tweets](./Imagenes/tweet_streamer.JPG "ejemplo 1")
+![Consumo tweets](../Imagenes/tweet_streamer.JPG "ejemplo 1")
 
 ### Leer tweets para enviarlos a un Kafka producer <a name="tweet_v2"></a>
 El segundo caso es el proceso de enviar datos a un kafka server (la configuración e instalación no se cubre en esta sección) en esta ocasión modifiqué la lógica original para utilizar la versión actual de Tweepy se realizan unos a mi StdOutListener y configure una clase que hereda de kafka producer para poder gestionar algunos eventos.
@@ -78,7 +78,7 @@ self.kafka_producer.send('twitter-topic', key = bytes(str(self.id), encoding='la
 
 De manera paralela cree un consumidor para probar que el código funcionara cuya única función era tomar el dato y almacenarlo en una base de datos de MongoDB `kafka_consumer.py` disponible en el repositorio
 
-![Consumo tweets kafka](./Imagenes/tweet_streamer_v2.JPG "ejemplo 2")
+![Consumo tweets kafka](../Imagenes/tweet_streamer_v2.JPG "ejemplo 2")
 
 ### Leer tweets exportar a Kinesis <a name="tweet_v3"></a>
 Esta versión funciona de manera similar a las anteriores pero esta pone un tweet en Kinesis utilizando el cliente boto3 y no un endpoint como en versiones anteriores. por lo que es mas fácil de configurar.
@@ -107,10 +107,10 @@ def send_to_kinesis(self, stream_name, kinesis_client, tweet_dict):
 		Data=json.dumps(data),
 		PartitionKey="partitionkey")
 ```
-![Consumo tweets kinesis](./Imagenes/tweet_streamer_v3.JPG "ejemplo 3")
+![Consumo tweets kinesis](../Imagenes/tweet_streamer_v3.JPG "ejemplo 3")
 
-Nótese que la imagen no menciono como consumir estos datos esto hace parte del proyecto general
+Nótese que la imagen no menciono como consumir estos datos esto hace parte del proyecto general y no realizamos la configuración de la librería `boto3` para facilitar el seguimiento del paso a paso
 
 ## Conclusión
 
-Estos códigos nos ayudan a tomar una fuente de datos viva e interiorizar el proceso de consumo de esta data desde un ambiente local, para este caso `Twitter` interiorizando el funcionamiento de esta parte tendremos el paso inicial para la implementación de la arquitectura
+Estos códigos nos ayudan a tomar una fuente de datos viva e interiorizar el proceso de consumo de esta data desde un ambiente local, para este caso `Twitter` interiorizando el funcionamiento de esta parte tendremos el paso inicial para la implementación de la arquitectura, 
