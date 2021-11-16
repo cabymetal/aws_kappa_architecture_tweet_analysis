@@ -16,13 +16,18 @@ Para la implementación de esta arquitectura pensamos en dos opciones [Lambda](h
 # 2 - Consumo de la api de Twitter
 podemos ver el paso a paso de configuración y códigos relacionados en la carpeta `Twitter`. además de un breve contexto de cada uno. Es el primer paso de este ejercicio en el cual tomamos datos de tweeter utilizando las llaves de una aplicación registrada, los transformamos y los ponemos en un kinesis stream.
 
-## 3- Creación kinesis stream
+# 3- Creación kinesis stream
 Es el encargado de la recepción y distribución de datos en nuestra arquitectura tenemos dos tipos de servicios implementados `Kinesis Stream` y `Kinesis Firehose` en esta sección se analizan algunas de las configuraciones entre otras pueden ser examinadas en la carpeta `Kinesis`.
 
-## 4 - Creación de Catalogos Glue
+# 4 - Creación de Catalogos Glue
+Siguiendo nuestro flujo de arquitectura en Batch los datos almacenados en Kinesis Firehose se trasladan a un bucket en s3 con los nombres que se especifican en la carpeta, estos datos se almacenan con una llave de la siguiente estructura:
 
-## 5 - Creación de tabla DynamoDB
+$$ s3_bucket/prefijo/YYYY/mm/dd/hh/ $$
 
-## 6 - Funciones Lambda
+Para no tener que consultar cada uno de estas carpetas podemos utilizar Glue que nos permite leer la información de estos buckets y poderla trabajar como SQL en herramientas como Athena, más información de la configuración en la carpeta `Glue`
+
+# 5 - Creación de tabla DynamoDB
+
+# 6 - Funciones Lambda
 
 
