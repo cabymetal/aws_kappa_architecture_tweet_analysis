@@ -22,12 +22,14 @@ Es el encargado de la recepción y distribución de datos en nuestra arquitectur
 # 4 - Creación de Catalogos Glue
 Siguiendo nuestro flujo de arquitectura en Batch los datos almacenados en Kinesis Firehose se trasladan a un bucket en s3 con los nombres que se especifican en la carpeta, estos datos se almacenan con una llave de la siguiente estructura:
 
-$$ s3_bucket/prefijo/YYYY/mm/dd/hh/ $$
+$ s3_bucket/prefijo/YYYY/mm/dd/hh/ $
 
 Para no tener que consultar cada uno de estas carpetas podemos utilizar Glue que nos permite leer la información de estos buckets y poderla trabajar como SQL en herramientas como Athena, más información de la configuración en la carpeta `Glue`
 
 # 5 - Creación de tabla DynamoDB
 
-# 6 - Funciones Lambda
+Podemos crear una tabla en Dynamo para almacenar los tweets de manera rápida Dynamo no es una buena base de datos para realizar consultas SQL 
 
+# 6 - Funciones Lambda
+Una de las partes claves de nuestra arquitectura es AWS Lambda que es la encargada de recibir datos de Kinesis Stream parsearlos y distribuirlos en otras plataformas podemos ver más información de sobre esto en la carpeta Lambda.
 

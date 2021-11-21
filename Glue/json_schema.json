@@ -1,0 +1,43 @@
+{
+  "$id": "http://json-schema.org/draft-07/myjsonschema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tweet",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Id asignado por mi programa generador"
+    },
+    "text": {
+      "type": "string",
+      "description": "texto del tweet a analizar"
+    },
+    "created_time": {
+      "description": "Fecha de cracion del tweet",
+      "type": "object"
+    },
+    "source": {
+      "description": "usuario crador tweet",
+      "type": "string"
+    },
+    "tweet_id": {
+      "description": "id del tweet en formato texto",
+      "type": "string"
+    },
+    "user_name": {
+      "description": "nombre de usuario",
+      "type": "string"
+    },
+    "user_id": {
+      "description": "nombre de usuario en formato texto",
+      "type": "string"
+    },
+    "run_start_time": {
+      "description": "fecha de inicio de ejecucion de mi programa",
+      "type": "number"
+    },
+    "run_time_limit": {
+      "description": "tiempo de ejecucion en minutos",
+      "type": "integer"
+    }
+  }
+}
