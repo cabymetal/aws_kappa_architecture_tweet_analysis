@@ -28,7 +28,7 @@ Para no tener que consultar cada uno de estas carpetas podemos utilizar Glue que
 
 # 5 - Creación de tabla DynamoDB
 
-Podemos crear una tabla en Dynamo para almacenar los tweets de manera rápida Dynamo no es una buena base de datos para realizar consultas SQL 
+Podemos crear una tabla en Dynamo para almacenar los tweets de manera rápida Dynamo no es una buena base de datos para realizar consultas SQL, pero muy rápida para obtención de registros a trtavés de claves porque es schemaless.
 
 # 6 - Funciones Lambda
 Una de las partes claves de nuestra arquitectura es AWS Lambda que es la encargada de recibir datos de Kinesis Stream parsearlos y distribuirlos en otras plataformas podemos ver más información de sobre esto en la carpeta Lambda.
