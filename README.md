@@ -33,3 +33,6 @@ Podemos crear una tabla en Dynamo para almacenar los tweets de manera rápida Dy
 # 6 - Funciones Lambda
 Una de las partes claves de nuestra arquitectura es AWS Lambda que es la encargada de recibir datos de Kinesis Stream parsearlos y distribuirlos en otras plataformas podemos ver más información de sobre esto en la carpeta Lambda.
 
+# 7 - Instancias EC2
+
+Solo utilizaremos las instancias de *EC2* para instalar **Logstash y Kibana** que son los servicios finales de la arquitectura, podríamos apuntar por un servicio autogestionado por cuestiones que escapan a este tutorial se opta por un servicio que se deba configurar desde cero 

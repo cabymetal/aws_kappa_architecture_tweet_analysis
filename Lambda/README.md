@@ -3,6 +3,7 @@ Esta es uno de los componentes core de la arquitectura pues recibe todos los req
 2. [Lambda Function 1](#lambda1)
 3. [Lambda Function 2](#lambda2)
 4. [Instalar librerías en Lambda](#lambda-libraries)
+5. [Conclusión](#conclusion)
 
 ## Creación de función Lambda <a name="create-lambda"></a>
 Para crear una función lambda entra al sección de Lambda en AWS y selecciona la opción `Create Function` 
@@ -64,7 +65,31 @@ va a crear un archivo local temporal y lo almacenara en nuestro bucket de s3
     try:
 		#archivo existe
 	except ClientError:
-    	#archivo no existe
-    	pass
+		#archivo no existe
+		pass
 ```
 
+## Instalar librerías en Lambda <a name="lambda-libraries"></a>
+Una de las librerías que se utilizaron en la función no se encuentran instaladas por defecto es el caso de `unicode` y `pandas` para realizar la instalación utilizamos uno de los servicios de AWS llamado `Cloud9` uno de los mejores tutoriales que se pueden seguir del proceso es: <a href="https://towardsdatascience.com/python-packages-in-aws-lambda-made-easy-8fbc78520e30">de Stefan French</a>.
+
+Realizaré un pequeño paso a paso pero el tutorial es bastante sencillo, seguir los pasos de configuración primero se le agrega un nombre y la descripción en la consola de cloud9 como se muestra en la imagen:
+![cloud9 instance](../Imagenes/cloud9_step1.JPG "Create Cloud9")
+
+En el siguiente paso se define el tamaño de la instancia y el método de ingreso a la instancia, en este caso el rol por defecto es suficiente.
+![cloud9 instance](../Imagenes/cloud9_step2.JPG "Create Cloud9")
+
+En el último paso solo se revisa que los valores son correctos y se presiona el botón crear ambiente
+![cloud9 instance](../Imagenes/cloud9_step3.JPG "Create Cloud9")
+
+en la consola principal creamos una carpeta donde utilizaremos el ambiente creado para crear las librerías
+![cloud9 instance](../Imagenes/cloud9_step4.JPG "Create Cloud9")
+
+Proseguimos creando un zip file con las librerías instaladas
+![cloud9 instance](../Imagenes/cloud9_step5.JPG "Create Cloud9")
+
+El último paso es agregar la capa dque acabamos de crear a la función Lmabda que ya creamos presionamos el botón "Add Layer"
+![cloud9 instance](../Imagenes/cloud9_step6.JPG "Create Cloud9")
+
+## Conclusión <a name="conclusion"></a>
+Hay múltiples parámetros que pueden mejorar la potencia y capacidad de una función Lambda que podríamos cambiar para mejorar el performance de una función lambda si encrementamos el tamaño del lote que recibe la función afectaremos el tiempo de procesamiento, en estos casos debemos analizar que es mejor mejorar la capacidad o el tiempo de respuesta encontrar un balanace entre estas dos medidas es crucial para realizar una aplicación robusta a nivel empresarial.
+El servicio de cloud9 lanza instancias en EC2 es importante recordar esto antes de lanzar multiples capas de Lambda porque podría incrementar costos de procesamiento
